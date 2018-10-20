@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.immimu.taskmanager.dummy.DummyContent
+import com.immimu.taskmanager.entity.DummyContent
+import com.immimu.taskmanager.entity.Task
 import kotlinx.android.synthetic.main.activity_task_detail.*
 import kotlinx.android.synthetic.main.task_detail.view.*
 
@@ -20,7 +21,7 @@ class TaskDetailFragment : Fragment() {
   /**
    * The dummy content this fragment is presenting.
    */
-  private var item: DummyContent.Task? = null
+  private var item: Task? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

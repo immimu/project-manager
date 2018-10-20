@@ -5,12 +5,16 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-import com.immimu.taskmanager.dummy.DummyContent
+import com.immimu.taskmanager.entity.DummyContent
+import com.immimu.taskmanager.entity.Task
+import dagger.android.AndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_task_list.*
 import kotlinx.android.synthetic.main.task_list_content.view.*
 import kotlinx.android.synthetic.main.task_list.*
@@ -23,7 +27,7 @@ import kotlinx.android.synthetic.main.task_list.*
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class TaskListActivity : AppCompatActivity() {
+class TaskListActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
   /**
    * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -59,7 +63,7 @@ class TaskListActivity : AppCompatActivity() {
   }
 
   class SimpleItemRecyclerViewAdapter(private val parentActivity: TaskListActivity,
-      private val values: List<DummyContent.Task>,
+      private val values: List<Task>,
       private val twoPane: Boolean) :
       RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
 
@@ -67,11 +71,11 @@ class TaskListActivity : AppCompatActivity() {
 
     init {
       onClickListener = View.OnClickListener { v ->
-        val item = v.tag as DummyContent.Task
+        val item = v.tag as Task
         if (twoPane) {
           val fragment = TaskDetailFragment().apply {
             arguments = Bundle().apply {
-              putInt(TaskDetailFragment.ARG_ITEM_ID, item.taskId)
+              putInt(TaskDetailFragment.ARG_ITEM_ID, item.id)
             }
           }
           parentActivity.supportFragmentManager
@@ -80,7 +84,7 @@ class TaskListActivity : AppCompatActivity() {
               .commit()
         } else {
           val intent = Intent(v.context, TaskDetailActivity::class.java).apply {
-            putExtra(TaskDetailFragment.ARG_ITEM_ID, item.taskId)
+            putExtra(TaskDetailFragment.ARG_ITEM_ID, item.id)
           }
           v.context.startActivity(intent)
         }
@@ -95,7 +99,7 @@ class TaskListActivity : AppCompatActivity() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       val item = values[position]
-      holder.idView.text = item.taskId.toString()
+      holder.idView.text = item.id.toString()
       holder.contentView.text = item.name
 
       with(holder.itemView) {
@@ -111,4 +115,6 @@ class TaskListActivity : AppCompatActivity() {
       val contentView: TextView = view.content
     }
   }
+
+  override fun supportFragmentInjector(): AndroidInjector<Fragment>? = null
 }

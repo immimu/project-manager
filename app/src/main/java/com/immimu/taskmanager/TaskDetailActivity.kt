@@ -3,8 +3,11 @@ package com.immimu.taskmanager
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import dagger.android.AndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_task_detail.*
 
 /**
@@ -13,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_task_detail.*
  * item details are presented side-by-side with a list of items
  * in a [TaskListActivity].
  */
-class TaskDetailActivity : AppCompatActivity() {
+class TaskDetailActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -67,4 +70,6 @@ class TaskDetailActivity : AppCompatActivity() {
         }
         else -> super.onOptionsItemSelected(item)
       }
+
+  override fun supportFragmentInjector(): AndroidInjector<Fragment>? = null
 }

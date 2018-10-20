@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-import com.immimu.taskmanager.dummy.DummyContent
-import com.immimu.taskmanager.dummy.Project
+import com.immimu.taskmanager.entity.DummyContent
+import com.immimu.taskmanager.entity.Project
+import dagger.android.AndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_project.projectList
 import kotlinx.android.synthetic.main.activity_task_list.*
 import kotlinx.android.synthetic.main.task_list_content.view.*
@@ -24,8 +27,7 @@ import kotlinx.android.synthetic.main.task_list_content.view.*
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-class ProjectActivity : AppCompatActivity() {
-
+class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -86,4 +88,6 @@ class ProjectActivity : AppCompatActivity() {
       val contentView: TextView = view.content
     }
   }
+
+  override fun supportFragmentInjector(): AndroidInjector<Fragment>? = null
 }
