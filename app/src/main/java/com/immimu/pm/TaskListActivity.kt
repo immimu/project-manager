@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -21,15 +20,7 @@ import kotlinx.android.synthetic.main.task_list.task_list
 import kotlinx.android.synthetic.main.task_list_content.view.content
 import kotlinx.android.synthetic.main.task_list_content.view.id_text
 
-/**
- * An activity representing a list of Pings. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a [TaskDetailActivity] representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
- */
-class TaskListActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class TaskListActivity : BaseActivity(), HasSupportFragmentInjector {
 
   /**
    * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -43,6 +34,7 @@ class TaskListActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     setSupportActionBar(toolbar)
     toolbar.title = title
+    setUpActionBar()
 
     fab.setOnClickListener { view ->
       Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -58,6 +50,14 @@ class TaskListActivity : AppCompatActivity(), HasSupportFragmentInjector {
     }
 
     setupRecyclerView(task_list)
+  }
+
+  private fun setUpActionBar() {
+    val actionBar = supportActionBar
+    actionBar?.let {
+      it.setDisplayHomeAsUpEnabled(true)
+      it.setDisplayShowHomeEnabled(true)
+    }
   }
 
   private fun setupRecyclerView(recyclerView: RecyclerView) {

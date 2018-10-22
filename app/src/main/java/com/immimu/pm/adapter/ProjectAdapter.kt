@@ -1,16 +1,22 @@
 package com.immimu.pm.adapter
 
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import com.immimu.pm.R
 import com.immimu.pm.entity.Project
 import kotlinx.android.synthetic.main.project_list_content.view.createdAtTextView
+import kotlinx.android.synthetic.main.project_list_content.view.dummyView
+import kotlinx.android.synthetic.main.project_list_content.view.moreMenu
+import kotlinx.android.synthetic.main.project_list_content.view.parentLayout
 import kotlinx.android.synthetic.main.project_list_content.view.projectDescTextView
 import kotlinx.android.synthetic.main.project_list_content.view.projectNameTextView
-import kotlinx.android.synthetic.main.project_list_content.view.updatedAtTextView
+import kotlinx.android.synthetic.main.project_list_content.view.viewTaskButton
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -19,8 +25,7 @@ class ProjectAdapter :
 
   val values: MutableList<Project> = ArrayList()
   private val simpleDateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.US)
-  private val createFormat = SimpleDateFormat("dd MMM yyyy", Locale.US)
-
+  var projectItemListener: ProjectItemListener? = null
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view = LayoutInflater.from(parent.context)
         .inflate(R.layout.project_list_content, parent, false)
@@ -33,14 +38,19 @@ class ProjectAdapter :
     holder.projectDesc.text = item.description
     holder.createdAt.text = holder.itemView.context.getString(R.string.text_created_at).plus(
         " ").plus(
-        createFormat.format(item.createdAt))
+        simpleDateFormat.format(item.createdAt))
 
-    holder.updateAt.text = holder.itemView.context.getString(R.string.text_updated_at).plus(
-        " ").plus(
-        simpleDateFormat.format(item.updateAt))
 
-    with(holder.itemView) {
-      tag = item
+    holder.viewButton.setOnClickListener {
+      projectItemListener?.onItemClicked(item)
+    }
+
+    holder.parentLayout.setOnClickListener {
+      projectItemListener?.onItemClicked(item)
+    }
+
+    holder.moreMenu.setOnClickListener {
+      projectItemListener?.onMoreMenuClicked(holder.dummyView, item)
     }
   }
 
@@ -49,7 +59,16 @@ class ProjectAdapter :
   inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val projectName: TextView = view.projectNameTextView
     val projectDesc: TextView = view.projectDescTextView
-    val updateAt: TextView = view.updatedAtTextView
     val createdAt: TextView = view.createdAtTextView
+    val viewButton: Button = view.viewTaskButton
+    val parentLayout: CardView = view.parentLayout
+    val moreMenu: ImageView = view.moreMenu
+    val dummyView: View = view.dummyView
+  }
+
+  interface ProjectItemListener {
+    fun onItemClicked(project: Project)
+
+    fun onMoreMenuClicked(view: View, project: Project)
   }
 }

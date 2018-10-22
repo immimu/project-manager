@@ -2,22 +2,17 @@ package com.immimu.pm
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.widget.ArrayAdapter
 import com.immimu.pm.entity.Project
-import com.immimu.pm.entity.TimeUnit
 import com.immimu.pm.vm.ProjectViewModel
 import dagger.android.AndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_project_composer.createProjectButton
 import kotlinx.android.synthetic.main.activity_project_composer.projectDescEditText
 import kotlinx.android.synthetic.main.activity_project_composer.projectNameEditText
-import kotlinx.android.synthetic.main.activity_project_composer.projectTargetEditText
-import kotlinx.android.synthetic.main.activity_project_composer.unitSpinner
-import kotlinx.android.synthetic.main.activity_task_list.toolbar
+import kotlinx.android.synthetic.main.activity_project_composer.toolbar
 import javax.inject.Inject
 
-class ProjectComposerActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class ProjectComposerActivity : BaseActivity(), HasSupportFragmentInjector {
 
   @Inject
   lateinit var projectViewModel: ProjectViewModel
@@ -26,13 +21,13 @@ class ProjectComposerActivity : AppCompatActivity(), HasSupportFragmentInjector 
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_project_composer)
     setSupportActionBar(toolbar)
-
-    val unitList = arrayOf("HOUR", "DAYS", "WEEKS", "MONTH")
+    setUpActionBar()
+    /*val unitList = arrayOf("HOUR", "DAYS", "WEEKS", "MONTH")
     val unitListValue = arrayOf(TimeUnit.HOUR, TimeUnit.DAYS, TimeUnit.WEEK, TimeUnit.MONTH)
 
     val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, unitList)
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    unitSpinner.adapter = adapter
+    unitSpinner.adapter = adapter*/
     var validated = false
     createProjectButton.setOnClickListener {
       val project = Project().apply {
@@ -55,24 +50,41 @@ class ProjectComposerActivity : AppCompatActivity(), HasSupportFragmentInjector 
           description = descValue
         }
 
-        // handle project description
-        val targetValue = projectTargetEditText.text.toString()
-        if (targetValue.isEmpty()) {
-          projectTargetEditText.error = getString(R.string.error_required)
-        } else {
-          projectTargetEditText.error = null
-          target = targetValue.toInt()
-        }
-
-        if (nameValue.isNotEmpty() && descValue.isNotEmpty() && targetValue.isNotEmpty()) {
+        if (nameValue.isNotEmpty() && descValue.isNotEmpty()) {
           validated = true
         }
-        timeUnit = unitListValue[unitSpinner.selectedItemPosition]
       }
       if (validated) {
         projectViewModel.createProject(project)
         finish()
       }
+    }
+
+    /*val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+    deadLineButton.setOnClickListener {
+      val datePickerDialog = DatePickerDialog(this,
+          OnDateSetListener { _, year, month, dayOfMonth ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+
+            deadLineDate = calendar.time
+            deadLineButton.text = DateTime(deadLineDate).toString(longDateFormat)
+          }, year, month, day)
+
+      datePickerDialog.show()
+    }*/
+  }
+
+  private fun setUpActionBar() {
+    val actionBar = supportActionBar
+    actionBar?.let {
+      it.setDisplayHomeAsUpEnabled(true)
+      it.setDisplayShowHomeEnabled(true)
     }
   }
 

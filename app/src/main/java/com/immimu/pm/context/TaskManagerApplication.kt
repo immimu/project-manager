@@ -5,6 +5,7 @@ import android.app.Application
 import com.immimu.pm.di.AppInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import net.danlew.android.joda.JodaTimeAndroid
 import javax.inject.Inject
 
 class TaskManagerApplication :Application(), HasActivityInjector{
@@ -14,9 +15,8 @@ class TaskManagerApplication :Application(), HasActivityInjector{
 
   override fun onCreate() {
     super.onCreate()
-    /*CalligraphyConfig.initDefault(CalligraphyConfig.Builder().setDefaultFontPath(
-        getString(R.string.museo_sans_rounded_regular)).setFontAttrId(R.attr.fontPath).build())*/
     AppInjector.init(this)
+    JodaTimeAndroid.init(this)
   }
 
   override fun activityInjector(): DispatchingAndroidInjector<Activity> = dispatchingAndroidInjector

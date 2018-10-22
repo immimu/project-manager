@@ -1,58 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:toosl="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="@dimen/margin_2dp"
     app:cardElevation="@dimen/margin_2dp"
     >
 
-  <LinearLayout
+  <android.support.constraint.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="@dimen/margin_16dp"
-      android:orientation="vertical"
       >
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/projectNameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_2dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/andada"
         android:maxLines="2"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textSize="@dimen/font_size_20sp"
+        android:textStyle="bold"
         app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toStartOf="@+id/moreMenu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        toosl:text="@string/lorem_ipsum_short"
         />
 
+    <ImageView
+        android:id="@+id/moreMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_more"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
     <TextView
         android:id="@+id/createdAtTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
         android:fontFamily="@font/andada"
         android:textColor="@color/grey"
         android:textSize="@dimen/font_size_10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/projectNameTextView"
+        toosl:text="@string/lorem_ipsum_short"
         />
 
     <TextView
         android:id="@+id/projectDescTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/andada"
         android:textAppearance="?attr/textAppearanceListItemSmall"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createdAtTextView"
+        toosl:text="@string/lorem_ipsum_long"
         />
 
-    <TextView
-        android:id="@+id/updatedAtTextView"
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/viewTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/andada"
-        android:textColor="@color/grey"
-        android:textSize="@dimen/font_size_10sp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/button_view_task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/projectDescTextView"
+        style="@style/Widget.AppCompat.Button.Colored"
         />
-  </LinearLayout>
+  </android.support.constraint.ConstraintLayout>
+  <View
+      android:id="@+id/dummyView"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:layout_gravity="center|top"
+      android:layout_margin="@dimen/margin_16dp"
+      />
 </android.support.v7.widget.CardView>

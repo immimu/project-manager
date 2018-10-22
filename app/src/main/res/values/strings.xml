@@ -12,4 +12,11 @@
   <string name="title_project">Projects</string>
   <string name="text_updated_at">Updated at</string>
   <string name="text_created_at">Created at</string>
+  <string name="text_setup_deadline">Setup the deadline</string>
+  <string name="lorem_ipsum_long">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
+  <string name="lorem_ipsum_short">Lorem Ipsum</string>
+  <string name="title_task">Tasks</string>
+  <string name="button_view_task">View Task</string>
+  <string name="short_date_format">dd MMM yyyy</string>
+  <string name="long_date_format">dd MMM yyyy HH:mm:ss</string>
 </resources>

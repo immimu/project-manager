@@ -5,10 +5,15 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.PopupMenu
+import android.view.ContextThemeWrapper
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.immimu.pm.adapter.ProjectAdapter
+import com.immimu.pm.adapter.ProjectAdapter.ProjectItemListener
 import com.immimu.pm.adapter.ProjectItemDecoration
+import com.immimu.pm.entity.Project
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.vm.ProjectViewModel
 import dagger.android.AndroidInjector
@@ -17,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_project.projectList
 import kotlinx.android.synthetic.main.activity_project.toolbar
 import javax.inject.Inject
 
-class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, ProjectItemListener {
 
   @Inject
   lateinit var intentFactory: IntentFactory
@@ -49,6 +54,7 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector {
     projectList.adapter = projectAdapter
     projectList.addItemDecoration(
         ProjectItemDecoration(resources.getDimensionPixelSize(R.dimen.margin_16dp)))
+    projectAdapter.projectItemListener = this
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -62,6 +68,28 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector {
       true
     }
     else -> super.onContextItemSelected(item)
+  }
+
+  override fun onItemClicked(project: Project) {
+    startActivity(intentFactory.createTaskScreen(this, project.id))
+  }
+
+  override fun onMoreMenuClicked(view: View, project: Project) {
+    val wrapper = ContextThemeWrapper(this, R.style.MyPopupMenu)
+    val popupMenu = PopupMenu(wrapper, view)
+    val inflater = popupMenu.menuInflater
+    inflater.inflate(R.menu.project_item_menu, popupMenu.menu)
+    popupMenu.setOnMenuItemClickListener { item ->
+      when (item.itemId) {
+        R.id.action_delete -> {
+          // do something when delete
+          true
+        }
+        else ->
+          false
+      }
+    }
+    popupMenu.show()
   }
 
   override fun supportFragmentInjector(): AndroidInjector<Fragment>? = null

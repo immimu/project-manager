@@ -7,7 +7,6 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import com.immimu.pm.entity.Project
-import com.immimu.pm.entity.Status
 
 /**
  * Created by miftahmubarak on 9/22/17.
@@ -26,11 +25,4 @@ interface ProjectDao {
 
   @Query("SELECT * FROM project WHERE id=:projectId")
   fun getProjectById(projectId: Int): Project
-
-  @Query("UPDATE project SET status=:status WHERE id=:projectId")
-  fun updateStatus(projectId: Int,
-      status: Status)
-
-  @Query("DELETE FROM project WHERE id=:projectId")
-  fun deleteById(projectId: Int)
 }
