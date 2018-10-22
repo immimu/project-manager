@@ -1,5 +1,15 @@
 <resources>
-  <string name="app_name">Task Manager</string>
+  <string name="app_name">Project Manager</string>
   <string name="title_task_detail">Task Detail</string>
   <string name="title_project_composer">Project Composer</string>
+  <string name="project_name">Project name</string>
+  <string name="project_description">Descriptions</string>
+  <string name="project_target">Target</string>
+  <string name="title_create_project">Create Project</string>
+  <string name="unit_prompt">Target unit</string>
+  <string name="button_create">Create</string>
+  <string name="error_required">This field required</string>
+  <string name="title_project">Projects</string>
+  <string name="text_updated_at">Updated at</string>
+  <string name="text_created_at">Created at</string>
 </resources>

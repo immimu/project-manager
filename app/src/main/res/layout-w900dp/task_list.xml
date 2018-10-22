@@ -28,7 +28,7 @@
       android:layout_marginLeft="16dp"
       android:layout_marginRight="16dp"
       app:layoutManager="LinearLayoutManager"
-      tools:context="com.immimu.taskmanager.TaskListActivity"
+      tools:context="com.immimu.pm.TaskListActivity"
       tools:listitem="@layout/task_list_content"
       />
 
