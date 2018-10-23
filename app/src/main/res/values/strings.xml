@@ -19,4 +19,7 @@
   <string name="button_view_task">View Task</string>
   <string name="short_date_format">dd MMM yyyy</string>
   <string name="long_date_format">dd MMM yyyy HH:mm:ss</string>
+  <string name="action_add_task">Add task</string>
+  <string name="action_edit">Edit project</string>
+  <string name="action_delete">Delete project</string>
 </resources>

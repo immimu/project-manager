@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.immimu.pm.R
 import com.immimu.pm.entity.Project
 import kotlinx.android.synthetic.main.project_list_content.view.createdAtTextView
-import kotlinx.android.synthetic.main.project_list_content.view.dummyView
 import kotlinx.android.synthetic.main.project_list_content.view.moreMenu
 import kotlinx.android.synthetic.main.project_list_content.view.parentLayout
 import kotlinx.android.synthetic.main.project_list_content.view.projectDescTextView
@@ -50,7 +49,7 @@ class ProjectAdapter :
     }
 
     holder.moreMenu.setOnClickListener {
-      projectItemListener?.onMoreMenuClicked(holder.dummyView, item)
+      projectItemListener?.onMoreMenuClicked(it, item)
     }
   }
 
@@ -63,7 +62,6 @@ class ProjectAdapter :
     val viewButton: Button = view.viewTaskButton
     val parentLayout: CardView = view.parentLayout
     val moreMenu: ImageView = view.moreMenu
-    val dummyView: View = view.dummyView
   }
 
   interface ProjectItemListener {
