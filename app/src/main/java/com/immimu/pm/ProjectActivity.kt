@@ -10,6 +10,8 @@ import android.view.ContextThemeWrapper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.afollestad.materialdialogs.MaterialDialog
+import com.immimu.pm.R.string
 import com.immimu.pm.adapter.ProjectAdapter
 import com.immimu.pm.adapter.ProjectAdapter.ProjectItemListener
 import com.immimu.pm.adapter.ProjectItemDecoration
@@ -82,7 +84,15 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
     popupMenu.setOnMenuItemClickListener { item ->
       when (item.itemId) {
         R.id.action_delete -> {
-          // do something when delete
+          showDialogConfirmation(project)
+          true
+        }
+        R.id.action_edit -> {
+          // TODO edit project
+          true
+        }
+        R.id.action_add_task -> {
+          // todo add task
           true
         }
         else ->
@@ -90,6 +100,16 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
       }
     }
     popupMenu.show()
+  }
+
+  private fun showDialogConfirmation(project: Project) {
+    MaterialDialog.Builder(this)
+        .title(getString(string.title_delete_confirmation))
+        .content(getString(string.text_delete_message))
+        .positiveText(getString(string.button_yes))
+        .negativeText(getString(string.button_no))
+        .onPositive { _, _ -> projectViewModel.deleteProject(project) }
+        .onNegative { dialog, _ -> dialog.dismiss() }.show()
   }
 
   override fun supportFragmentInjector(): AndroidInjector<Fragment>? = null
