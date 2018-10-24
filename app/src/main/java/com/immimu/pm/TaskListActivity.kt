@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.immimu.pm.adapter.AbstractTaskAdapter
 import com.immimu.pm.context.EXTRA_PROJECT_ID
 import com.immimu.pm.entity.Task
@@ -14,6 +15,8 @@ import com.immimu.pm.vm.ProjectViewModel
 import dagger.android.AndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_task_list.toolbar
+import kotlinx.android.synthetic.main.empty_view.emptyContainer
+import kotlinx.android.synthetic.main.empty_view.emptyTextView
 import kotlinx.android.synthetic.main.task_list.task_detail_container
 import kotlinx.android.synthetic.main.task_list.task_list
 import javax.inject.Inject
@@ -38,18 +41,30 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector {
     toolbar.title = title
     setUpActionBar()
 
+    emptyTextView.text = getString(R.string.text_empty_task)
+    emptyTextView.setOnClickListener { createTask() }
+
     if (task_detail_container != null) {
       twoPane = true
     }
 
     setupRecyclerView(task_list)
-    projectViewModel.allTask.observe(this, Observer { items ->
+    projectViewModel.getAllTask(projectId).observe(this, Observer { items ->
       if (items != null && items.isNotEmpty()) {
+        emptyContainer.visibility = View.GONE
         taskAdapter.values.clear()
         taskAdapter.values.addAll(items)
         taskAdapter.notifyDataSetChanged()
+      } else {
+        taskAdapter.values.clear()
+        taskAdapter.notifyDataSetChanged()
+        emptyContainer.visibility = View.VISIBLE
       }
     })
+  }
+
+  private fun createTask() {
+    startActivity(intentFactory.createTaskComposerScreen(this, projectId))
   }
 
   private fun setUpActionBar() {
@@ -75,7 +90,7 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector {
       true
     }
     R.id.action_create -> {
-      startActivity(intentFactory.createTaskComposerScreen(this, projectId))
+      createTask()
       true
     }
     else -> super.onContextItemSelected(item)

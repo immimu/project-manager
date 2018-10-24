@@ -22,6 +22,9 @@ import dagger.android.AndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_project.projectList
 import kotlinx.android.synthetic.main.activity_project.toolbar
+import kotlinx.android.synthetic.main.empty_view.emptyContainer
+import kotlinx.android.synthetic.main.empty_view.emptyTextView
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, ProjectItemListener {
@@ -40,15 +43,20 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
     setSupportActionBar(toolbar)
     toolbar.title = getString(R.string.title_project)
 
+    emptyTextView.text = getString(string.text_empty_project)
+    emptyTextView.setOnClickListener { createProject() }
+
     setupRecyclerView()
     projectViewModel.allProject.observe(this, Observer { items ->
       if (items != null && items.isNotEmpty()) {
+        emptyContainer.visibility = View.GONE
         projectAdapter.values.clear()
         projectAdapter.values.addAll(items)
         projectAdapter.notifyDataSetChanged()
       } else {
         projectAdapter.values.clear()
         projectAdapter.notifyDataSetChanged()
+        emptyContainer.visibility = View.VISIBLE
       }
     })
   }
@@ -69,10 +77,14 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
 
   override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
     R.id.action_create -> {
-      startActivity(intentFactory.createProjectComposerScreen(this))
+      createProject()
       true
     }
     else -> super.onContextItemSelected(item)
+  }
+
+  private fun createProject() {
+    startActivity(intentFactory.createProjectComposerScreen(this))
   }
 
   override fun onItemClicked(project: Project) {
@@ -91,12 +103,10 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
           true
         }
         R.id.action_edit -> {
-          // TODO edit project
-          // TODO add empty view in project list
+          toast("TODO : add edit function")
           true
         }
         R.id.action_add_task -> {
-          // todo add task
           startActivity(intentFactory.createTaskComposerScreen(this, project.id))
           true
         }

@@ -54,6 +54,9 @@ dependencies {
 
   implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
+  implementation "org.jetbrains.anko:anko:$ankoVersion"
+  implementation "org.jetbrains.anko:anko-design:$ankoVersion"
+
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'com.android.support.test:runner:1.0.2'
   androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

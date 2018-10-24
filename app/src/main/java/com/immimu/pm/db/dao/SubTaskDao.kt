@@ -18,6 +18,9 @@ interface SubTaskDao {
   @get:Query("SELECT * FROM subtask ORDER BY id DESC")
   val allTask: LiveData<List<SubTask>>
 
+  @Query("SELECT * FROM subtask WHERE parentTaskId=:parentTaskId")
+  fun allTask(parentTaskId: Int): LiveData<List<SubTask>>
+
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insertTask(task: SubTask)
 

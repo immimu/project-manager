@@ -15,8 +15,11 @@ import com.immimu.pm.entity.Task
 @Dao
 interface TaskDao {
 
-  @get:Query("SELECT * FROM task ORDER BY projectId DESC")
+  @get:Query("SELECT * FROM task ORDER BY id DESC")
   val allTask: LiveData<List<Task>>
+
+  @Query("SELECT * FROM task WHERE projectId=:projectId")
+  fun allTask(projectId: Int): LiveData<List<Task>>
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun insertTask(task: Task)

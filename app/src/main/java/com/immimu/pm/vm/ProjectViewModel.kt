@@ -16,9 +16,9 @@ class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
 
   val allProject = projectDao.allProject
 
-  val allTask = taskDao.allTask
+  fun getAllTask(projectId: Int) = taskDao.allTask(projectId)
 
-  val allSubTask = subTaskDao.allTask
+  fun getAllSubTask(parentTaskId: Int) = subTaskDao.allTask(parentTaskId)
 
   fun createProject(project: Project) {
     projectDao.insertProject(project)
@@ -31,4 +31,5 @@ class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
   fun deleteProject(project: Project) {
     projectDao.delete(project)
   }
+
 }
