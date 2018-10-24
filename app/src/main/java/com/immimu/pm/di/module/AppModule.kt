@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import com.immimu.pm.db.TaskManagerDatabase
 import com.immimu.pm.db.dao.ProjectDao
+import com.immimu.pm.db.dao.SubTaskDao
 import com.immimu.pm.db.dao.TaskDao
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.intent.IntentFactoryImpl
@@ -33,6 +34,12 @@ internal class AppModule {
   @Provides
   fun provideTaskDao(db: TaskManagerDatabase): TaskDao {
     return db.taskDao()
+  }
+
+  @Singleton
+  @Provides
+  fun provideSubTaskDao(db: TaskManagerDatabase): SubTaskDao {
+    return db.subTaskDao()
   }
 
   @Provides

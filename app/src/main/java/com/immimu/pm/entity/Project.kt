@@ -24,5 +24,3 @@ enum class Priority(val code: Int) {
 enum class TimeUnit(val code: Int) {
   HOUR(0), DAYS(1), WEEK(2), MONTH(3)
 }
-
-data class ProjectWrapper(val project: Project)

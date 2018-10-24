@@ -3,6 +3,7 @@ package com.immimu.pm.vm
 import android.arch.lifecycle.ViewModel
 import com.hadisatrio.libs.android.viewmodelprovider.GeneratedProvider
 import com.immimu.pm.db.dao.ProjectDao
+import com.immimu.pm.db.dao.SubTaskDao
 import com.immimu.pm.db.dao.TaskDao
 import com.immimu.pm.entity.Project
 import com.immimu.pm.entity.Task
@@ -10,10 +11,14 @@ import javax.inject.Inject
 
 @GeneratedProvider
 class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
-    private val taskDao: TaskDao) :
+    private val taskDao: TaskDao, private val subTaskDao: SubTaskDao) :
     ViewModel() {
 
   val allProject = projectDao.allProject
+
+  val allTask = taskDao.allTask
+
+  val allSubTask = subTaskDao.allTask
 
   fun createProject(project: Project) {
     projectDao.insertProject(project)

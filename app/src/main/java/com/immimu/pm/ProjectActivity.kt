@@ -46,6 +46,9 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
         projectAdapter.values.clear()
         projectAdapter.values.addAll(items)
         projectAdapter.notifyDataSetChanged()
+      } else {
+        projectAdapter.values.clear()
+        projectAdapter.notifyDataSetChanged()
       }
     })
   }
@@ -89,10 +92,12 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
         }
         R.id.action_edit -> {
           // TODO edit project
+          // TODO add empty view in project list
           true
         }
         R.id.action_add_task -> {
           // todo add task
+          startActivity(intentFactory.createTaskComposerScreen(this, project.id))
           true
         }
         else ->

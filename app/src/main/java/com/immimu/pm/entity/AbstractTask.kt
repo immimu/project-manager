@@ -1,6 +1,6 @@
 package com.immimu.pm.entity
 
-import com.immimu.pm.entity.TimeUnit.HOUR
+import com.immimu.pm.entity.Priority.NONE
 import java.util.Date
 
 abstract class AbstractTask {
@@ -10,6 +10,6 @@ abstract class AbstractTask {
   var updateAt: Date = Date()
   var target: Int = 0
   var startDate: Date? = null
-  var timeUnit: TimeUnit = HOUR
   var status: Status = Status.TODO
+  var priority: Priority = NONE
 }

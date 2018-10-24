@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.immimu.pm.ProjectActivity
 import com.immimu.pm.ProjectComposerActivity
+import com.immimu.pm.TaskComposerActivity
 import com.immimu.pm.TaskDetailActivity
 import com.immimu.pm.TaskListActivity
 import com.immimu.pm.context.EXTRA_PROJECT_ID
@@ -25,4 +26,9 @@ class IntentFactoryImpl : IntentFactory {
   override fun createTaskDetailsScreen(context: Context): Intent = Intent(context,
       TaskDetailActivity::class.java)
 
+  override fun createTaskComposerScreen(context: Context, projectId: Int): Intent {
+    val intent = Intent(context, TaskComposerActivity::class.java)
+    intent.putExtra(EXTRA_PROJECT_ID, projectId)
+    return intent
+  }
 }

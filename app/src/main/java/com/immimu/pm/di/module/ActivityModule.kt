@@ -18,6 +18,7 @@ package com.immimu.pm.di.module
 
 import com.immimu.pm.ProjectActivity
 import com.immimu.pm.ProjectComposerActivity
+import com.immimu.pm.TaskComposerActivity
 import com.immimu.pm.TaskDetailActivity
 import com.immimu.pm.TaskListActivity
 import dagger.Module
@@ -37,5 +38,8 @@ abstract class ActivityModule {
 
   @ContributesAndroidInjector
   internal abstract fun contributeTaskDetailActivity(): TaskDetailActivity
+
+  @ContributesAndroidInjector
+  internal abstract fun contributeTaskComposerActivity(): TaskComposerActivity
 
 }

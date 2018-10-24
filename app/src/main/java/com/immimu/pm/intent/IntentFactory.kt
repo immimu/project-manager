@@ -11,4 +11,6 @@ interface IntentFactory {
   fun createTaskScreen(context: Context, projectId: Int): Intent
 
   fun createTaskDetailsScreen(context: Context): Intent
+
+  fun createTaskComposerScreen(context: Context, projectId: Int): Intent
 }

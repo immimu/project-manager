@@ -26,4 +26,5 @@
   <string name="text_delete_message">Are you sure want to delete this project?</string>
   <string name="button_yes">Yes</string>
   <string name="button_no">No</string>
+  <string name="title_task_composer">Task Composer</string>
 </resources>
