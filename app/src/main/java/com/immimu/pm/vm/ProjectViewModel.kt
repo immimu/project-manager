@@ -32,4 +32,7 @@ class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
     projectDao.delete(project)
   }
 
+  fun getProjectById(projectId: Int) = projectDao.getProjectById(projectId)
+
+  fun getTaskById(taskId: Int) = taskDao.getTaskById(taskId)
 }

@@ -8,25 +8,29 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.immimu.pm.adapter.AbstractTaskAdapter
+import com.immimu.pm.adapter.AbstractTaskAdapter.TaskItemListener
 import com.immimu.pm.context.EXTRA_PROJECT_ID
 import com.immimu.pm.entity.Task
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.vm.ProjectViewModel
 import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_task_list.toolbar
 import kotlinx.android.synthetic.main.empty_view.emptyContainer
 import kotlinx.android.synthetic.main.empty_view.emptyTextView
-import kotlinx.android.synthetic.main.task_list.task_detail_container
-import kotlinx.android.synthetic.main.task_list.task_list
+import kotlinx.android.synthetic.main.task_list.taskDetailContainer
+import kotlinx.android.synthetic.main.task_list.taskList
 import javax.inject.Inject
 
-class TaskListActivity : BaseActivity(), HasSupportFragmentInjector {
+class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemListener<Task> {
 
   @Inject
   lateinit var projectViewModel: ProjectViewModel
   @Inject
   lateinit var intentFactory: IntentFactory
+  @Inject
+  lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
   private var twoPane: Boolean = false
   private val taskAdapter = AbstractTaskAdapter<Task>()
@@ -44,11 +48,11 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector {
     emptyTextView.text = getString(R.string.text_empty_task)
     emptyTextView.setOnClickListener { createTask() }
 
-    if (task_detail_container != null) {
+    if (taskDetailContainer != null) {
       twoPane = true
     }
 
-    setupRecyclerView(task_list)
+    setupRecyclerView(taskList)
     projectViewModel.getAllTask(projectId).observe(this, Observer { items ->
       if (items != null && items.isNotEmpty()) {
         emptyContainer.visibility = View.GONE
@@ -77,6 +81,7 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector {
 
   private fun setupRecyclerView(recyclerView: RecyclerView) {
     recyclerView.adapter = taskAdapter
+    taskAdapter.taskItemListener = this
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -96,5 +101,25 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector {
     else -> super.onContextItemSelected(item)
   }
 
-  override fun supportFragmentInjector(): AndroidInjector<Fragment>? = null
+  override fun onTaskClicked(task: Task) {
+    if (twoPane) {
+      val fragment = SubTasklFragment().apply {
+        arguments = Bundle().apply {
+          putInt(SubTasklFragment.ARG_ITEM_ID, task.id)
+        }
+      }
+      supportFragmentManager
+          .beginTransaction()
+          .replace(R.id.taskDetailContainer, fragment)
+          .commit()
+    } else {
+      startActivity(intentFactory.createTaskDetailsScreen(this))
+    }
+  }
+
+  override fun onTaskMoreMenuClicked(view: View, task: Task) {
+    // TODO for mor menu
+  }
+
+  override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
 }

@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme.NoActionBar"/>
 
     <activity
-        android:name=".TaskDetailActivity"
+        android:name=".SubTaskActivity"
         android:label="@string/title_task_detail"
         android:parentActivityName=".TaskListActivity"
         android:theme="@style/AppTheme.NoActionBar">

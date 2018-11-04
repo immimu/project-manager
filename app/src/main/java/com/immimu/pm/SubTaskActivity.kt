@@ -2,14 +2,14 @@ package com.immimu.pm
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import com.immimu.pm.intent.IntentFactory
 import dagger.android.AndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.activity_task_detail.detail_toolbar
-import kotlinx.android.synthetic.main.activity_task_detail.fab
+import kotlinx.android.synthetic.main.activity_task_detail.detailToolbar
+import javax.inject.Inject
 
 /**
  * An activity representing a single Task detail screen. This
@@ -17,17 +17,15 @@ import kotlinx.android.synthetic.main.activity_task_detail.fab
  * item details are presented side-by-side with a list of items
  * in a [TaskListActivity].
  */
-class TaskDetailActivity : AppCompatActivity(), HasSupportFragmentInjector {
+class SubTaskActivity : AppCompatActivity(), HasSupportFragmentInjector {
+
+  @Inject
+  lateinit var intentFactory: IntentFactory
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_task_detail)
-    setSupportActionBar(detail_toolbar)
-
-    fab.setOnClickListener { view ->
-      Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-          .setAction("Action", null).show()
-    }
+    setSupportActionBar(detailToolbar)
 
     // Show the Up button in the action bar.
     supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -44,15 +42,15 @@ class TaskDetailActivity : AppCompatActivity(), HasSupportFragmentInjector {
     if (savedInstanceState == null) {
       // Create the detail fragment and add it to the activity
       // using a fragment transaction.
-      val fragment = TaskDetailFragment().apply {
+      val fragment = SubTasklFragment().apply {
         arguments = Bundle().apply {
-          putString(TaskDetailFragment.ARG_ITEM_ID,
-              intent.getStringExtra(TaskDetailFragment.ARG_ITEM_ID))
+          putString(SubTasklFragment.ARG_ITEM_ID,
+              intent.getStringExtra(SubTasklFragment.ARG_ITEM_ID))
         }
       }
 
       supportFragmentManager.beginTransaction()
-          .add(R.id.task_detail_container, fragment)
+          .add(R.id.taskDetailContainer, fragment)
           .commit()
     }
   }

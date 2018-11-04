@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".TaskDetailActivity"
+    tools:context=".SubTaskActivity"
     tools:ignore="MergeRootFrame"
     >
 
   <android.support.design.widget.AppBarLayout
-      android:id="@+id/app_bar"
+      android:id="@+id/appBar"
       android:layout_width="match_parent"
       android:layout_height="@dimen/app_bar_height"
       android:fitsSystemWindows="true"
@@ -18,7 +18,7 @@
       >
 
     <android.support.design.widget.CollapsingToolbarLayout
-        android:id="@+id/toolbar_layout"
+        android:id="@+id/toolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -28,7 +28,7 @@
         >
 
       <android.support.v7.widget.Toolbar
-          android:id="@+id/detail_toolbar"
+          android:id="@+id/detailToolbar"
           android:layout_width="match_parent"
           android:layout_height="?attr/actionBarSize"
           app:layout_collapseMode="pin"
@@ -39,22 +39,13 @@
 
   </android.support.design.widget.AppBarLayout>
 
-  <android.support.v4.widget.NestedScrollView
-      android:id="@+id/task_detail_container"
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/subTaskList"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
-      />
-
-  <android.support.design.widget.FloatingActionButton
-      android:id="@+id/fab"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical|start"
-      android:layout_margin="@dimen/fab_margin"
-      app:layout_anchor="@+id/task_detail_container"
-      app:layout_anchorGravity="top|end"
-      app:srcCompat="@android:drawable/ic_menu_edit"
+      app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+      tools:listitem="@layout/task_list_content"
       />
 
 </android.support.design.widget.CoordinatorLayout>
