@@ -33,10 +33,10 @@ abstract class ActivityModule {
   @ContributesAndroidInjector
   internal abstract fun contributeProjectComposerActivity(): ProjectComposerActivity
 
-  @ContributesAndroidInjector(modules = [TaskDetailFragmentModule::class])
+  @ContributesAndroidInjector(modules = [SubTaskFragmentModule::class])
   internal abstract fun contributeTaskListActivity(): TaskListActivity
 
-  @ContributesAndroidInjector
+  @ContributesAndroidInjector(modules = [SubTaskFragmentModule::class])
   internal abstract fun contributeTaskDetailActivity(): SubTaskActivity
 
   @ContributesAndroidInjector

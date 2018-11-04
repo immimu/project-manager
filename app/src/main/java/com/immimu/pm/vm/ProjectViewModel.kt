@@ -6,6 +6,7 @@ import com.immimu.pm.db.dao.ProjectDao
 import com.immimu.pm.db.dao.SubTaskDao
 import com.immimu.pm.db.dao.TaskDao
 import com.immimu.pm.entity.Project
+import com.immimu.pm.entity.SubTask
 import com.immimu.pm.entity.Task
 import javax.inject.Inject
 
@@ -26,6 +27,10 @@ class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
 
   fun createTask(task: Task) {
     taskDao.insertTask(task)
+  }
+
+  fun createSubTask(subTask: SubTask) {
+    subTaskDao.insertTask(subTask)
   }
 
   fun deleteProject(project: Project) {

@@ -7,8 +7,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.immimu.pm.R.dimen
 import com.immimu.pm.adapter.AbstractTaskAdapter
 import com.immimu.pm.adapter.AbstractTaskAdapter.TaskItemListener
+import com.immimu.pm.adapter.ProjectItemDecoration
+import com.immimu.pm.context.EXTRA_PARENT_TASK_ID
 import com.immimu.pm.context.EXTRA_PROJECT_ID
 import com.immimu.pm.entity.Task
 import com.immimu.pm.intent.IntentFactory
@@ -68,7 +71,7 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
   }
 
   private fun createTask() {
-    startActivity(intentFactory.createTaskComposerScreen(this, projectId))
+    startActivity(intentFactory.createTaskComposerScreen(this, projectId, false))
   }
 
   private fun setUpActionBar() {
@@ -82,6 +85,8 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
   private fun setupRecyclerView(recyclerView: RecyclerView) {
     recyclerView.adapter = taskAdapter
     taskAdapter.taskItemListener = this
+    recyclerView.addItemDecoration(
+        ProjectItemDecoration(resources.getDimensionPixelSize(dimen.margin_10dp)))
   }
 
   override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -103,9 +108,9 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
 
   override fun onTaskClicked(task: Task) {
     if (twoPane) {
-      val fragment = SubTasklFragment().apply {
+      val fragment = SubTaskFragment().apply {
         arguments = Bundle().apply {
-          putInt(SubTasklFragment.ARG_ITEM_ID, task.id)
+          putInt(EXTRA_PARENT_TASK_ID, task.id)
         }
       }
       supportFragmentManager
@@ -113,7 +118,7 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
           .replace(R.id.taskDetailContainer, fragment)
           .commit()
     } else {
-      startActivity(intentFactory.createTaskDetailsScreen(this))
+      startActivity(intentFactory.createSubTaskScreen(this, task.id))
     }
   }
 

@@ -39,13 +39,12 @@
 
   </android.support.design.widget.AppBarLayout>
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/subTaskList"
+  <FrameLayout
+      android:id="@+id/taskDetailContainer"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       app:layout_behavior="@string/appbar_scrolling_view_behavior"
-      app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-      tools:listitem="@layout/task_list_content"
       />
 
+  <include layout="@layout/empty_view"/>
 </android.support.design.widget.CoordinatorLayout>

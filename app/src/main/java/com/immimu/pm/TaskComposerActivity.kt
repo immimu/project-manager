@@ -2,7 +2,9 @@ package com.immimu.pm
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import com.immimu.pm.context.EXTRA_IS_SUB_TASK
 import com.immimu.pm.context.EXTRA_PROJECT_ID
+import com.immimu.pm.entity.SubTask
 import com.immimu.pm.entity.Task
 import com.immimu.pm.vm.ProjectViewModel
 import dagger.android.AndroidInjector
@@ -18,8 +20,10 @@ class TaskComposerActivity : BaseActivity(), HasSupportFragmentInjector {
   @Inject
   lateinit var projectViewModel: ProjectViewModel
 
-  val projectId: Int
+  private val projectId: Int
     get() = intent.getIntExtra(EXTRA_PROJECT_ID, 0)
+  private val isSubTask: Boolean
+    get() = intent.getBooleanExtra(EXTRA_IS_SUB_TASK, false)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -34,33 +38,64 @@ class TaskComposerActivity : BaseActivity(), HasSupportFragmentInjector {
     unitSpinner.adapter = adapter*/
     var validated = false
     createProjectButton.setOnClickListener {
-      val task = Task(projectId).apply {
+      if (isSubTask) {
+        val task = SubTask(projectId).apply {
 
-        // handle project name
-        val nameValue = projectNameEditText.text.toString()
-        if (nameValue.isEmpty()) {
-          projectNameEditText.error = getString(R.string.error_required)
-        } else {
-          projectNameEditText.error = null
-          name = nameValue
-        }
+          // handle project name
+          val nameValue = projectNameEditText.text.toString()
+          if (nameValue.isEmpty()) {
+            projectNameEditText.error = getString(R.string.error_required)
+          } else {
+            projectNameEditText.error = null
+            name = nameValue
+          }
 
-        // handle project description
-        val descValue = projectDescEditText.text.toString()
-        if (descValue.isEmpty()) {
-          projectDescEditText.error = getString(R.string.error_required)
-        } else {
-          projectDescEditText.error = null
-          description = descValue
-        }
+          // handle project description
+          val descValue = projectDescEditText.text.toString()
+          if (descValue.isEmpty()) {
+            projectDescEditText.error = getString(R.string.error_required)
+          } else {
+            projectDescEditText.error = null
+            description = descValue
+          }
 
-        if (nameValue.isNotEmpty() && descValue.isNotEmpty()) {
-          validated = true
+          if (nameValue.isNotEmpty() && descValue.isNotEmpty()) {
+            validated = true
+          }
         }
-      }
-      if (validated) {
-        projectViewModel.createTask(task)
-        finish()
+        if (validated) {
+          projectViewModel.createSubTask(task)
+          finish()
+        }
+      } else {
+        val task = Task(projectId).apply {
+
+          // handle project name
+          val nameValue = projectNameEditText.text.toString()
+          if (nameValue.isEmpty()) {
+            projectNameEditText.error = getString(R.string.error_required)
+          } else {
+            projectNameEditText.error = null
+            name = nameValue
+          }
+
+          // handle project description
+          val descValue = projectDescEditText.text.toString()
+          if (descValue.isEmpty()) {
+            projectDescEditText.error = getString(R.string.error_required)
+          } else {
+            projectDescEditText.error = null
+            description = descValue
+          }
+
+          if (nameValue.isNotEmpty() && descValue.isNotEmpty()) {
+            validated = true
+          }
+        }
+        if (validated) {
+          projectViewModel.createTask(task)
+          finish()
+        }
       }
     }
 

@@ -27,7 +27,7 @@ interface TaskDao {
   @Delete
   fun delete(task: Task)
 
-  @Query("SELECT * FROM task WHERE projectId=:taskId")
+  @Query("SELECT * FROM task WHERE id=:taskId")
   fun getTaskById(taskId: Int): Task
 
   @Query("UPDATE task SET status=:status WHERE projectId=:taskId")
