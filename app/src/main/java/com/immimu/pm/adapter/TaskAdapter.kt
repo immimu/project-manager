@@ -8,9 +8,17 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.immimu.pm.R
+import com.immimu.pm.entity.Priority.HIGH
+import com.immimu.pm.entity.Priority.LOW
+import com.immimu.pm.entity.Priority.MEDIUM
+import com.immimu.pm.entity.Priority.URGENT
+import com.immimu.pm.entity.Status
 import com.immimu.pm.entity.TaskWrapper
 import kotlinx.android.synthetic.main.task_list_content.view.createdAtTextView
 import kotlinx.android.synthetic.main.task_list_content.view.moreMenu
+import kotlinx.android.synthetic.main.task_list_content.view.priorityTextView
+import kotlinx.android.synthetic.main.task_list_content.view.statusTextView
+import kotlinx.android.synthetic.main.task_list_content.view.targetTextView
 import kotlinx.android.synthetic.main.task_list_content.view.taskDescTextView
 import kotlinx.android.synthetic.main.task_list_content.view.taskNameTextView
 import kotlinx.android.synthetic.main.task_list_content.view.viewTaskButton
@@ -38,10 +46,30 @@ class TaskAdapter :
         " ").plus(
         simpleDateFormat.format(item.task?.createdAt))
 
+    val status = when (item.task?.status) {
+      Status.TODO -> "TO DO"
+      Status.IN_PROGRESS -> "IN PROGRESS"
+      else -> "DONE"
+    }
+
+    val priority = when (item.task?.priority) {
+      LOW -> "LOW"
+      MEDIUM -> "MEDIUM"
+      HIGH -> "HIGH"
+      URGENT -> "URGENT"
+      else -> "NONE"
+    }
+
+    holder.status.text = status
+    holder.priority.text = priority
+    holder.target.text = item.task?.target.toString().plus(" Hours")
+
     if (item.subTasks.size > 0) {
       holder.viewButton.text = holder.itemView.context.getString(R.string.button_view_sub_task)
+      holder.target.visibility = View.INVISIBLE
     } else {
       holder.viewButton.text = holder.itemView.context.getString(R.string.button_start_task)
+      holder.target.visibility = View.VISIBLE
     }
 
     holder.viewButton.setOnClickListener {
@@ -61,6 +89,9 @@ class TaskAdapter :
     val createdAt: TextView = view.createdAtTextView
     val viewButton: Button = view.viewTaskButton
     val moreMenu: ImageView = view.moreMenu
+    val status: TextView = view.statusTextView
+    val priority: TextView = view.priorityTextView
+    val target: TextView = view.targetTextView
   }
 
   interface TaskItemListener {

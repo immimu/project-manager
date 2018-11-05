@@ -30,8 +30,24 @@
         android:textSize="@dimen/font_size_20sp"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/priorityTextView"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        toosl:text="@string/lorem_ipsum_short"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/priorityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/andada"
+        android:maxLines="2"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         toosl:text="@string/lorem_ipsum_short"
         />
@@ -42,12 +58,29 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/targetTextView"
+        />
+
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/andada"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/moreMenu"
+        app:layout_constraintStart_toEndOf="@+id/moreMenu"
+        app:layout_constraintTop_toTopOf="@+id/moreMenu"
+        toosl:text="@string/lorem_ipsum_short"
         />
     <TextView
         android:id="@+id/createdAtTextView"
@@ -78,17 +111,33 @@
         toosl:text="@string/lorem_ipsum_long"
         />
 
+    <TextView
+        android:id="@+id/targetTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:drawablePadding="@dimen/margin_2dp"
+        android:drawableStart="@drawable/ic_target"
+        android:fontFamily="@font/andada"
+        android:gravity="start|center"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskDescTextView"
+        toosl:text="@string/lorem_ipsum_short"
+        />
+
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/viewTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="@string/button_view_sub_task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDescTextView"
+        app:layout_constraintTop_toBottomOf="@+id/targetTextView"
         style="@style/Widget.AppCompat.Button.Borderless.Colored"
         />
   </android.support.constraint.ConstraintLayout>

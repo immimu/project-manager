@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_more_vert_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/Applications/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_av_timer_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -44,8 +44,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_more" />
-                                      <entry key="themeColor" value="eb4d5c" />
+                                      <entry key="outputName" value="ic_target" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="f44336" />
                                     </map>
                                   </option>
                                 </PersistentState>
