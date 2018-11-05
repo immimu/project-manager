@@ -47,7 +47,7 @@
             android:id="@+id/projectNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/project_name"
+            android:hint="@string/hint_task_name"
             android:inputType="textCapSentences"
             android:maxLength="50"
             />
@@ -70,48 +70,30 @@
             />
       </android.support.design.widget.TextInputLayout>
 
-      <!-- <android.support.v7.widget.AppCompatTextView
-         android:id="@+id/deadLineButton"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginBottom="@dimen/margin_10dp"
-         android:text="@string/text_setup_deadline"
-         android:gravity="start|center"
-         android:drawableStart="@drawable/ic_calendar"
-         />
+      <android.support.design.widget.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="@dimen/margin_10dp"
+          >
+        <EditText
+            android:id="@+id/targetEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_target"
+            android:inputType="number"
+            android:maxLength="2"
+            />
+      </android.support.design.widget.TextInputLayout>
 
-     <Layout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_marginBottom="@dimen/margin_10dp"
-         android:orientation="horizontal"
-         >
-       <android.support.design.widget.TextInputLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginEnd="@dimen/margin_16dp"
-           android:layout_weight="1"
-           android:minWidth="50dp"
-           >
-         <EditText
-             android:id="@+id/projectTargetEditText"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:hint="@string/project_target"
-             android:inputType="number"
-             android:maxLength="2"
-             />
-       </android.support.design.widget.TextInputLayout>
-       <Spinner
-           android:id="@+id/unitSpinner"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_gravity="bottom"
-           android:layout_weight="0"
-           android:prompt="@string/unit_prompt"
-           style="@style/Base.Widget.AppCompat.Spinner.Underlined"
-           />
-     </LinearLayout>-->
+      <Spinner
+          android:id="@+id/prioritySpinner"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          android:prompt="@string/unit_prompt"
+          style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+          />
+
       <android.support.v7.widget.AppCompatButton
           android:id="@+id/createProjectButton"
           android:layout_width="match_parent"

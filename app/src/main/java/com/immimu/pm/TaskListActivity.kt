@@ -158,7 +158,7 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
         }
         R.id.action_add_sub_task -> {
           task.task?.let {
-            startActivity(intentFactory.createTaskComposerScreen(this, it.id, false))
+            startActivity(intentFactory.createTaskComposerScreen(this, it.id, true))
           }
           true
         }

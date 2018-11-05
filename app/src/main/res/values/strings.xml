@@ -34,4 +34,6 @@
   <string name="button_view_sub_task">view sub task</string>
   <string name="button_start_task">Start this task</string>
   <string name="action_add_sub_task">Add sub task</string>
+  <string name="hint_target">Target (in hour)</string>
+  <string name="hint_task_name">Task name</string>
 </resources>

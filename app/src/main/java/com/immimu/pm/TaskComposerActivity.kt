@@ -1,17 +1,22 @@
 package com.immimu.pm
 
+import android.R.layout
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.widget.ArrayAdapter
 import com.immimu.pm.context.EXTRA_IS_SUB_TASK
 import com.immimu.pm.context.EXTRA_PROJECT_ID
+import com.immimu.pm.entity.Priority
 import com.immimu.pm.entity.SubTask
 import com.immimu.pm.entity.Task
 import com.immimu.pm.vm.ProjectViewModel
 import dagger.android.AndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_task_composer.createProjectButton
+import kotlinx.android.synthetic.main.activity_task_composer.prioritySpinner
 import kotlinx.android.synthetic.main.activity_task_composer.projectDescEditText
 import kotlinx.android.synthetic.main.activity_task_composer.projectNameEditText
+import kotlinx.android.synthetic.main.activity_task_composer.targetEditText
 import kotlinx.android.synthetic.main.activity_task_composer.toolbar
 import javax.inject.Inject
 
@@ -30,12 +35,14 @@ class TaskComposerActivity : BaseActivity(), HasSupportFragmentInjector {
     setContentView(R.layout.activity_task_composer)
     setSupportActionBar(toolbar)
     setUpActionBar()
-    /*val unitList = arrayOf("HOUR", "DAYS", "WEEKS", "MONTH")
-    val unitListValue = arrayOf(TimeUnit.HOUR, TimeUnit.DAYS, TimeUnit.WEEK, TimeUnit.MONTH)
+    val priorityList = arrayOf("NONE", "LOW", "MEDIUM", "HIGH", "URGENT")
+    val priorityListValue = arrayOf(Priority.NONE, Priority.LOW, Priority.MEDIUM, Priority.HIGH,
+        Priority.URGENT)
 
-    val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, unitList)
+    val adapter = ArrayAdapter(this, layout.simple_spinner_item, priorityList)
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    unitSpinner.adapter = adapter*/
+    prioritySpinner.adapter = adapter
+
     var validated = false
     createProjectButton.setOnClickListener {
       if (isSubTask) {
@@ -57,6 +64,14 @@ class TaskComposerActivity : BaseActivity(), HasSupportFragmentInjector {
           } else {
             projectDescEditText.error = null
             description = descValue
+          }
+
+          priority = priorityListValue[prioritySpinner.selectedItemPosition]
+          val targetString = targetEditText.text.toString()
+          target = if (targetString.isNotEmpty()) {
+            targetString.toInt()
+          } else {
+            0
           }
 
           if (nameValue.isNotEmpty() && descValue.isNotEmpty()) {
@@ -88,6 +103,14 @@ class TaskComposerActivity : BaseActivity(), HasSupportFragmentInjector {
             description = descValue
           }
 
+          priority = priorityListValue[prioritySpinner.selectedItemPosition]
+          val targetString = targetEditText.text.toString()
+          target = if (targetString.isNotEmpty()) {
+            targetString.toInt()
+          } else {
+            0
+          }
+
           if (nameValue.isNotEmpty() && descValue.isNotEmpty()) {
             validated = true
           }
@@ -98,25 +121,6 @@ class TaskComposerActivity : BaseActivity(), HasSupportFragmentInjector {
         }
       }
     }
-
-    /*val calendar = Calendar.getInstance()
-    val year = calendar.get(Calendar.YEAR)
-    val month = calendar.get(Calendar.MONTH)
-    val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-    deadLineButton.setOnClickListener {
-      val datePickerDialog = DatePickerDialog(this,
-          OnDateSetListener { _, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            deadLineDate = calendar.time
-            deadLineButton.text = DateTime(deadLineDate).toString(longDateFormat)
-          }, year, month, day)
-
-      datePickerDialog.show()
-    }*/
   }
 
   private fun setUpActionBar() {
