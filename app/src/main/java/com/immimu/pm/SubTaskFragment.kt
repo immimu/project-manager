@@ -8,11 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.immimu.pm.R.dimen
-import com.immimu.pm.adapter.AbstractTaskAdapter
 import com.immimu.pm.adapter.ProjectItemDecoration
+import com.immimu.pm.adapter.SubTaskAdapter
 import com.immimu.pm.context.EXTRA_PARENT_TASK_ID
 import com.immimu.pm.di.Injectable
-import com.immimu.pm.entity.SubTask
 import com.immimu.pm.entity.Task
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.vm.ProjectViewModel
@@ -39,7 +38,7 @@ class SubTaskFragment : Fragment(), Injectable {
   lateinit var projectViewModel: ProjectViewModel
   @Inject
   lateinit var intentFactory: IntentFactory
-  private val subTaskAdapter: AbstractTaskAdapter<SubTask> = AbstractTaskAdapter()
+  private val subTaskAdapter = SubTaskAdapter()
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {

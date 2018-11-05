@@ -5,6 +5,7 @@ import com.hadisatrio.libs.android.viewmodelprovider.GeneratedProvider
 import com.immimu.pm.db.dao.ProjectDao
 import com.immimu.pm.db.dao.SubTaskDao
 import com.immimu.pm.db.dao.TaskDao
+import com.immimu.pm.db.dao.TaskWrapperDao
 import com.immimu.pm.entity.Project
 import com.immimu.pm.entity.SubTask
 import com.immimu.pm.entity.Task
@@ -12,12 +13,13 @@ import javax.inject.Inject
 
 @GeneratedProvider
 class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
-    private val taskDao: TaskDao, private val subTaskDao: SubTaskDao) :
+    private val taskDao: TaskDao, private val taskWrapperDao: TaskWrapperDao,
+    private val subTaskDao: SubTaskDao) :
     ViewModel() {
 
   val allProject = projectDao.allProject
 
-  fun getAllTask(projectId: Int) = taskDao.allTask(projectId)
+  fun getAllTask(projectId: Int) = taskWrapperDao.allTask(projectId)
 
   fun getAllSubTask(parentTaskId: Int) = subTaskDao.allTask(parentTaskId)
 

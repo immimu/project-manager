@@ -32,4 +32,5 @@
   <string name="text_empty_sub_task">No sub task yet</string>
   <string name="title_create_task">create task</string>
   <string name="button_view_sub_task">view sub task</string>
+  <string name="button_start_task">Start this task</string>
 </resources>

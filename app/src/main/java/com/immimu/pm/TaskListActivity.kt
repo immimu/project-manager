@@ -8,13 +8,13 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.immimu.pm.R.dimen
-import com.immimu.pm.adapter.AbstractTaskAdapter
-import com.immimu.pm.adapter.AbstractTaskAdapter.TaskItemListener
 import com.immimu.pm.adapter.ProjectItemDecoration
+import com.immimu.pm.adapter.TaskAdapter
+import com.immimu.pm.adapter.TaskAdapter.TaskItemListener
 import com.immimu.pm.context.EXTRA_PARENT_TASK_ID
 import com.immimu.pm.context.EXTRA_PROJECT_ID
 import com.immimu.pm.entity.Project
-import com.immimu.pm.entity.Task
+import com.immimu.pm.entity.TaskWrapper
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.vm.ProjectViewModel
 import dagger.android.AndroidInjector
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.task_list.taskDetailContainer
 import kotlinx.android.synthetic.main.task_list.taskList
 import javax.inject.Inject
 
-class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemListener<Task> {
+class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemListener {
 
   @Inject
   lateinit var projectViewModel: ProjectViewModel
@@ -37,7 +37,7 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
   lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
   private var twoPane: Boolean = false
-  private val taskAdapter = AbstractTaskAdapter<Task>()
+  private val taskAdapter = TaskAdapter()
   private val projectId: Int
     get() = intent.getIntExtra(EXTRA_PROJECT_ID, 0)
 
@@ -112,23 +112,27 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
     else -> super.onContextItemSelected(item)
   }
 
-  override fun onTaskClicked(task: Task) {
+  override fun onTaskClicked(task: TaskWrapper) {
     if (twoPane) {
-      val fragment = SubTaskFragment().apply {
-        arguments = Bundle().apply {
-          putInt(EXTRA_PARENT_TASK_ID, task.id)
+      task.task?.let {
+        val fragment = SubTaskFragment().apply {
+          arguments = Bundle().apply {
+            putInt(EXTRA_PARENT_TASK_ID, it.id)
+          }
         }
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.taskDetailContainer, fragment)
+            .commit()
       }
-      supportFragmentManager
-          .beginTransaction()
-          .replace(R.id.taskDetailContainer, fragment)
-          .commit()
     } else {
-      startActivity(intentFactory.createSubTaskScreen(this, task.id))
+      task.task?.let {
+        startActivity(intentFactory.createSubTaskScreen(this, it.id))
+      }
     }
   }
 
-  override fun onTaskMoreMenuClicked(view: View, task: Task) {
+  override fun onTaskMoreMenuClicked(view: View, task: TaskWrapper) {
     // TODO for mor menu
   }
 

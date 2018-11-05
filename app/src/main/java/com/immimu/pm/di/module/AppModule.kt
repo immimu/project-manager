@@ -7,6 +7,7 @@ import com.immimu.pm.db.TaskManagerDatabase
 import com.immimu.pm.db.dao.ProjectDao
 import com.immimu.pm.db.dao.SubTaskDao
 import com.immimu.pm.db.dao.TaskDao
+import com.immimu.pm.db.dao.TaskWrapperDao
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.intent.IntentFactoryImpl
 import dagger.Module
@@ -34,6 +35,12 @@ internal class AppModule {
   @Provides
   fun provideTaskDao(db: TaskManagerDatabase): TaskDao {
     return db.taskDao()
+  }
+
+  @Singleton
+  @Provides
+  fun provideTaskWrapperDao(db: TaskManagerDatabase): TaskWrapperDao {
+    return db.taskWrapperDao()
   }
 
   @Singleton

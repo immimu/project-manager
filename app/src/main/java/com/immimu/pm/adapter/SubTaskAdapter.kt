@@ -8,7 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.immimu.pm.R
-import com.immimu.pm.entity.AbstractTask
+import com.immimu.pm.entity.SubTask
 import kotlinx.android.synthetic.main.task_list_content.view.createdAtTextView
 import kotlinx.android.synthetic.main.task_list_content.view.moreMenu
 import kotlinx.android.synthetic.main.task_list_content.view.taskDescTextView
@@ -17,12 +17,13 @@ import kotlinx.android.synthetic.main.task_list_content.view.viewTaskButton
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class AbstractTaskAdapter<T : AbstractTask> :
-    RecyclerView.Adapter<AbstractTaskAdapter<T>.ViewHolder>() {
+class SubTaskAdapter :
+    RecyclerView.Adapter<SubTaskAdapter.ViewHolder>() {
 
-  val values: MutableList<T> = ArrayList()
+  val values: MutableList<SubTask> = ArrayList()
   private val simpleDateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.US)
-  var taskItemListener: TaskItemListener<T>? = null
+  var subTaskItemListener: SubTaskItemListener? = null
+
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val view = LayoutInflater.from(parent.context)
         .inflate(R.layout.task_list_content, parent, false)
@@ -38,12 +39,14 @@ class AbstractTaskAdapter<T : AbstractTask> :
         simpleDateFormat.format(item.createdAt))
 
 
+    holder.viewButton.text = holder.itemView.context.getString(R.string.button_start_task)
+
     holder.viewButton.setOnClickListener {
-      taskItemListener?.onTaskClicked(item)
+      subTaskItemListener?.onSubTaskClicked(item)
     }
 
     holder.moreMenu.setOnClickListener {
-      taskItemListener?.onTaskMoreMenuClicked(it, item)
+      subTaskItemListener?.onSubTaskMoreMenuClicked(it, item)
     }
   }
 
@@ -57,9 +60,9 @@ class AbstractTaskAdapter<T : AbstractTask> :
     val moreMenu: ImageView = view.moreMenu
   }
 
-  interface TaskItemListener<T : AbstractTask> {
-    fun onTaskClicked(task: T)
+  interface SubTaskItemListener {
+    fun onSubTaskClicked(task: SubTask)
 
-    fun onTaskMoreMenuClicked(view: View, task: T)
+    fun onSubTaskMoreMenuClicked(view: View, task: SubTask)
   }
 }
