@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import com.immimu.pm.db.TaskManagerDatabase
 import com.immimu.pm.db.dao.ProjectDao
+import com.immimu.pm.db.dao.ProjectWrapperDao
 import com.immimu.pm.db.dao.SubTaskDao
 import com.immimu.pm.db.dao.TaskDao
 import com.immimu.pm.db.dao.TaskWrapperDao
@@ -29,6 +30,12 @@ internal class AppModule {
   @Provides
   fun provideProjectDao(db: TaskManagerDatabase): ProjectDao {
     return db.projectDao()
+  }
+
+  @Singleton
+  @Provides
+  fun provideProjectWrapperDao(db: TaskManagerDatabase): ProjectWrapperDao {
+    return db.projectWrapperDaoDao()
   }
 
   @Singleton

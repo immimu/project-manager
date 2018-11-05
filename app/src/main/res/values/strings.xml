@@ -20,10 +20,10 @@
   <string name="short_date_format">dd MMM yyyy</string>
   <string name="long_date_format">dd MMM yyyy HH:mm:ss</string>
   <string name="action_add_task">Add task</string>
-  <string name="action_edit">Edit project</string>
-  <string name="action_delete">Delete project</string>
+  <string name="action_edit">Edit</string>
+  <string name="action_delete">Delete</string>
   <string name="title_delete_confirmation">Delete confirmation</string>
-  <string name="text_delete_message">Are you sure want to delete this project?</string>
+  <string name="text_delete_message">Are you sure want to delete it?</string>
   <string name="button_yes">Yes</string>
   <string name="button_no">No</string>
   <string name="title_task_composer">Task Composer</string>
@@ -33,4 +33,5 @@
   <string name="title_create_task">create task</string>
   <string name="button_view_sub_task">view sub task</string>
   <string name="button_start_task">Start this task</string>
+  <string name="action_add_sub_task">Add sub task</string>
 </resources>

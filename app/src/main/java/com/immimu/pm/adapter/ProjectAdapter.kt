@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.immimu.pm.R
 import com.immimu.pm.entity.Project
+import com.immimu.pm.entity.ProjectWrapper
 import kotlinx.android.synthetic.main.project_list_content.view.createdAtTextView
 import kotlinx.android.synthetic.main.project_list_content.view.moreMenu
 import kotlinx.android.synthetic.main.project_list_content.view.parentLayout
@@ -22,7 +23,7 @@ import java.util.Locale
 class ProjectAdapter :
     RecyclerView.Adapter<ProjectAdapter.ViewHolder>() {
 
-  val values: MutableList<Project> = ArrayList()
+  val values: MutableList<ProjectWrapper> = ArrayList()
   private val simpleDateFormat = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.US)
   var projectItemListener: ProjectItemListener? = null
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,23 +34,32 @@ class ProjectAdapter :
 
   override fun onBindViewHolder(holder: ViewHolder, position: Int) {
     val item = values[position]
-    holder.projectName.text = item.name
-    holder.projectDesc.text = item.description
-    holder.createdAt.text = holder.itemView.context.getString(R.string.text_created_at).plus(
-        " ").plus(
-        simpleDateFormat.format(item.createdAt))
+    item.project?.let { project ->
 
+      holder.projectName.text = project.name
+      holder.projectDesc.text = project.description
+      holder.createdAt.text = holder.itemView.context.getString(R.string.text_created_at).plus(
+          " ").plus(
+          simpleDateFormat.format(project.createdAt))
 
-    holder.viewButton.setOnClickListener {
-      projectItemListener?.onItemClicked(item)
-    }
+      val text = holder.itemView.context.getString(R.string.button_view_task).plus(
+          " (${item.tasks.size})")
+      if (item.tasks.size > 0) {
+        holder.viewButton.text = text
+      } else {
+        holder.viewButton.text = holder.itemView.context.getString(R.string.button_view_task)
+      }
+      holder.viewButton.setOnClickListener {
+        projectItemListener?.onItemClicked(project)
+      }
 
-    holder.parentLayout.setOnClickListener {
-      projectItemListener?.onItemClicked(item)
-    }
+      holder.parentLayout.setOnClickListener {
+        projectItemListener?.onItemClicked(project)
+      }
 
-    holder.moreMenu.setOnClickListener {
-      projectItemListener?.onMoreMenuClicked(it, item)
+      holder.moreMenu.setOnClickListener {
+        projectItemListener?.onMoreMenuClicked(it, project)
+      }
     }
   }
 

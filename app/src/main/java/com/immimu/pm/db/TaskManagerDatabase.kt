@@ -8,6 +8,7 @@ import com.immimu.pm.db.converter.PriorityConverter
 import com.immimu.pm.db.converter.StatusConverter
 import com.immimu.pm.db.converter.TimeUnitConverter
 import com.immimu.pm.db.dao.ProjectDao
+import com.immimu.pm.db.dao.ProjectWrapperDao
 import com.immimu.pm.db.dao.SubTaskDao
 import com.immimu.pm.db.dao.TaskDao
 import com.immimu.pm.db.dao.TaskWrapperDao
@@ -26,6 +27,8 @@ import com.immimu.pm.entity.Task
 abstract class TaskManagerDatabase : RoomDatabase() {
 
   abstract fun projectDao(): ProjectDao
+
+  abstract fun projectWrapperDaoDao(): ProjectWrapperDao
 
   abstract fun taskDao(): TaskDao
 

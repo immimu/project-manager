@@ -3,6 +3,7 @@ package com.immimu.pm.vm
 import android.arch.lifecycle.ViewModel
 import com.hadisatrio.libs.android.viewmodelprovider.GeneratedProvider
 import com.immimu.pm.db.dao.ProjectDao
+import com.immimu.pm.db.dao.ProjectWrapperDao
 import com.immimu.pm.db.dao.SubTaskDao
 import com.immimu.pm.db.dao.TaskDao
 import com.immimu.pm.db.dao.TaskWrapperDao
@@ -13,11 +14,12 @@ import javax.inject.Inject
 
 @GeneratedProvider
 class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
+    private val projectWrapperDao: ProjectWrapperDao,
     private val taskDao: TaskDao, private val taskWrapperDao: TaskWrapperDao,
     private val subTaskDao: SubTaskDao) :
     ViewModel() {
 
-  val allProject = projectDao.allProject
+  val allProject = projectWrapperDao.allProject()
 
   fun getAllTask(projectId: Int) = taskWrapperDao.allTask(projectId)
 
@@ -42,4 +44,8 @@ class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
   fun getProjectById(projectId: Int) = projectDao.getProjectById(projectId)
 
   fun getTaskById(taskId: Int) = taskDao.getTaskById(taskId)
+
+  fun deleteTask(task: Task) {
+    taskDao.delete(task)
+  }
 }

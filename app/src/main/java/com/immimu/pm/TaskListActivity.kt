@@ -3,17 +3,23 @@ package com.immimu.pm
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.PopupMenu
 import android.support.v7.widget.RecyclerView
+import android.view.ContextThemeWrapper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.afollestad.materialdialogs.MaterialDialog
 import com.immimu.pm.R.dimen
+import com.immimu.pm.R.string
+import com.immimu.pm.R.style
 import com.immimu.pm.adapter.ProjectItemDecoration
 import com.immimu.pm.adapter.TaskAdapter
 import com.immimu.pm.adapter.TaskAdapter.TaskItemListener
 import com.immimu.pm.context.EXTRA_PARENT_TASK_ID
 import com.immimu.pm.context.EXTRA_PROJECT_ID
 import com.immimu.pm.entity.Project
+import com.immimu.pm.entity.Task
 import com.immimu.pm.entity.TaskWrapper
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.vm.ProjectViewModel
@@ -25,6 +31,7 @@ import kotlinx.android.synthetic.main.empty_view.emptyContainer
 import kotlinx.android.synthetic.main.empty_view.emptyTextView
 import kotlinx.android.synthetic.main.task_list.taskDetailContainer
 import kotlinx.android.synthetic.main.task_list.taskList
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemListener {
@@ -133,7 +140,43 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
   }
 
   override fun onTaskMoreMenuClicked(view: View, task: TaskWrapper) {
-    // TODO for mor menu
+    val wrapper = ContextThemeWrapper(this, style.MyPopupMenu)
+    val popupMenu = PopupMenu(wrapper, view)
+    val inflater = popupMenu.menuInflater
+    inflater.inflate(R.menu.task_item_menu, popupMenu.menu)
+    popupMenu.setOnMenuItemClickListener { item ->
+      when (item.itemId) {
+        R.id.action_delete -> {
+          task.task?.let {
+            showDialogConfirmation(it)
+          }
+          true
+        }
+        R.id.action_edit -> {
+          toast("TODO : add edit function")
+          true
+        }
+        R.id.action_add_sub_task -> {
+          task.task?.let {
+            startActivity(intentFactory.createTaskComposerScreen(this, it.id, false))
+          }
+          true
+        }
+        else ->
+          false
+      }
+    }
+    popupMenu.show()
+  }
+
+  private fun showDialogConfirmation(task: Task) {
+    MaterialDialog.Builder(this)
+        .title(getString(string.title_delete_confirmation))
+        .content(getString(string.text_delete_message))
+        .positiveText(getString(string.button_yes))
+        .negativeText(getString(string.button_no))
+        .onPositive { _, _ -> projectViewModel.deleteTask(task) }
+        .onNegative { dialog, _ -> dialog.dismiss() }.show()
   }
 
   override fun supportFragmentInjector(): AndroidInjector<Fragment> = dispatchingAndroidInjector
