@@ -13,6 +13,7 @@ import com.immimu.pm.adapter.AbstractTaskAdapter.TaskItemListener
 import com.immimu.pm.adapter.ProjectItemDecoration
 import com.immimu.pm.context.EXTRA_PARENT_TASK_ID
 import com.immimu.pm.context.EXTRA_PROJECT_ID
+import com.immimu.pm.entity.Project
 import com.immimu.pm.entity.Task
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.vm.ProjectViewModel
@@ -53,6 +54,11 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
 
     if (taskDetailContainer != null) {
       twoPane = true
+    }
+
+    val project: Project? = projectViewModel.getProjectById(projectId)
+    project?.let {
+      supportActionBar?.title = it.name
     }
 
     setupRecyclerView(taskList)

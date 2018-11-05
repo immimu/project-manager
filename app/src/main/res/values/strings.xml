@@ -29,6 +29,7 @@
   <string name="title_task_composer">Task Composer</string>
   <string name="text_empty_project">No projects yet</string>
   <string name="text_empty_task">No task yet</string>
+  <string name="text_empty_sub_task">No sub task yet</string>
   <string name="title_create_task">create task</string>
   <string name="button_view_sub_task">view sub task</string>
 </resources>

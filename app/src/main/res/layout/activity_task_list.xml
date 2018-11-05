@@ -34,6 +34,4 @@
     <include layout="@layout/task_list"/>
   </FrameLayout>
 
-  <include layout="@layout/empty_view"/>
-
 </android.support.design.widget.CoordinatorLayout>

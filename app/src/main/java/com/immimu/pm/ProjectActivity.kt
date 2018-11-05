@@ -62,7 +62,7 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
   }
 
   private fun setupRecyclerView() {
-    val layoutManager = LinearLayoutManager(this)
+    val layoutManager: LinearLayoutManager? = LinearLayoutManager(this)
     projectList.layoutManager = layoutManager
     projectList.adapter = projectAdapter
     projectList.addItemDecoration(

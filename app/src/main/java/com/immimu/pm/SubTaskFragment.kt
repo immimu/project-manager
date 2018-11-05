@@ -17,6 +17,7 @@ import com.immimu.pm.entity.Task
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.vm.ProjectViewModel
 import kotlinx.android.synthetic.main.activity_task_list.toolbar
+import kotlinx.android.synthetic.main.empty_view.emptyContainer
 import kotlinx.android.synthetic.main.empty_view.emptyTextView
 import kotlinx.android.synthetic.main.sub_task.fab
 import kotlinx.android.synthetic.main.sub_task.subTaskList
@@ -47,10 +48,11 @@ class SubTaskFragment : Fragment(), Injectable {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-    setupRecyclerView(subTaskList)
 
-    emptyTextView.text = getString(R.string.text_empty_task)
+    emptyTextView.text = getString(R.string.text_empty_sub_task)
     emptyTextView.setOnClickListener { createSubTask() }
+
+    setupRecyclerView(subTaskList)
 
     arguments?.let {
       if (it.containsKey(EXTRA_PARENT_TASK_ID)) {
@@ -61,12 +63,12 @@ class SubTaskFragment : Fragment(), Injectable {
         }
         projectViewModel.getAllSubTask(parentTaskId).observe(this, Observer { items ->
           if (items != null && items.isNotEmpty()) {
-            emptyTextView.visibility = View.GONE
+            emptyContainer.visibility = View.GONE
             subTaskAdapter.values.clear()
             subTaskAdapter.values.addAll(items)
             subTaskAdapter.notifyDataSetChanged()
           } else {
-            emptyTextView.visibility = View.VISIBLE
+            emptyContainer.visibility = View.VISIBLE
             subTaskAdapter.values.clear()
             subTaskAdapter.notifyDataSetChanged()
           }

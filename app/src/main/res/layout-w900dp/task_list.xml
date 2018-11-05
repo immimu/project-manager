@@ -11,21 +11,26 @@
     tools:context=".TaskListActivity"
     >
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/taskList"
+  <FrameLayout
       android:layout_width="@dimen/item_width"
       android:layout_height="match_parent"
-      app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-      tools:context="com.immimu.pm.TaskListActivity"
-      tools:listitem="@layout/task_list_content"
       android:layout_weight="0"
-      />
+      >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/taskList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        tools:context="com.immimu.pm.TaskListActivity"
+        tools:listitem="@layout/task_list_content"
 
+        />
+    <include layout="@layout/empty_view"/>
+  </FrameLayout>
   <FrameLayout
       android:id="@+id/taskDetailContainer"
       android:layout_width="0dp"
       android:layout_height="match_parent"
       android:layout_weight="1"
       />
-
 </LinearLayout>
