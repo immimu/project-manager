@@ -36,4 +36,5 @@
   <string name="action_add_sub_task">Add sub task</string>
   <string name="hint_target">Target (in hour)</string>
   <string name="hint_task_name">Task name</string>
+  <string name="button_update">Update</string>
 </resources>

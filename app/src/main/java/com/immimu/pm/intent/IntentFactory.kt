@@ -6,7 +6,7 @@ import android.content.Intent
 interface IntentFactory {
   fun createProjectScreen(context: Context): Intent
 
-  fun createProjectComposerScreen(context: Context): Intent
+  fun createProjectComposerScreen(context: Context, isNew: Boolean, projectId: Int? = null): Intent
 
   fun createTaskScreen(context: Context, projectId: Int): Intent
 

@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.activity_project.projectList
 import kotlinx.android.synthetic.main.activity_project.toolbar
 import kotlinx.android.synthetic.main.empty_view.emptyContainer
 import kotlinx.android.synthetic.main.empty_view.emptyTextView
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, ProjectItemListener {
@@ -84,7 +83,7 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
   }
 
   private fun createProject() {
-    startActivity(intentFactory.createProjectComposerScreen(this))
+    startActivity(intentFactory.createProjectComposerScreen(this, true))
   }
 
   override fun onItemClicked(project: Project) {
@@ -103,7 +102,7 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
           true
         }
         R.id.action_edit -> {
-          toast("TODO : add edit function")
+          startActivity(intentFactory.createProjectComposerScreen(this, false, project.id))
           true
         }
         R.id.action_add_task -> {

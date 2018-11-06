@@ -2,6 +2,8 @@ package com.immimu.pm
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import com.immimu.pm.context.EXTRA_IS_NEW
+import com.immimu.pm.context.EXTRA_PROJECT_ID
 import com.immimu.pm.entity.Project
 import com.immimu.pm.vm.ProjectViewModel
 import dagger.android.AndroidInjector
@@ -16,18 +18,23 @@ class ProjectComposerActivity : BaseActivity(), HasSupportFragmentInjector {
 
   @Inject
   lateinit var projectViewModel: ProjectViewModel
+  private val projectId: Int
+    get() = intent.getIntExtra(EXTRA_PROJECT_ID, 0)
+  private val isNew: Boolean
+    get() = intent.getBooleanExtra(EXTRA_IS_NEW, false)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_project_composer)
     setSupportActionBar(toolbar)
     setUpActionBar()
-    /*val unitList = arrayOf("HOUR", "DAYS", "WEEKS", "MONTH")
-    val unitListValue = arrayOf(TimeUnit.HOUR, TimeUnit.DAYS, TimeUnit.WEEK, TimeUnit.MONTH)
 
-    val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, unitList)
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-    unitSpinner.adapter = adapter*/
+    if (isNew.not()) {
+      val project = projectViewModel.getProjectById(projectId)
+      projectNameEditText.setText(project.name)
+      projectDescEditText.setText(project.description)
+      createProjectButton.text = getString(R.string.button_update)
+    }
     var validated = false
     createProjectButton.setOnClickListener {
       val project = Project().apply {
@@ -55,29 +62,15 @@ class ProjectComposerActivity : BaseActivity(), HasSupportFragmentInjector {
         }
       }
       if (validated) {
-        projectViewModel.createProject(project)
+        if (isNew) {
+          projectViewModel.createProject(project)
+        } else {
+          project.id = projectId
+          projectViewModel.updateProject(project)
+        }
         finish()
       }
     }
-
-    /*val calendar = Calendar.getInstance()
-    val year = calendar.get(Calendar.YEAR)
-    val month = calendar.get(Calendar.MONTH)
-    val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-    deadLineButton.setOnClickListener {
-      val datePickerDialog = DatePickerDialog(this,
-          OnDateSetListener { _, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            deadLineDate = calendar.time
-            deadLineButton.text = DateTime(deadLineDate).toString(longDateFormat)
-          }, year, month, day)
-
-      datePickerDialog.show()
-    }*/
   }
 
   private fun setUpActionBar() {

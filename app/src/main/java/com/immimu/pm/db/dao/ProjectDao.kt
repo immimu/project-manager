@@ -6,6 +6,7 @@ import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
+import android.arch.persistence.room.Update
 import com.immimu.pm.entity.Project
 
 /**
@@ -25,4 +26,7 @@ interface ProjectDao {
 
   @Query("SELECT * FROM project WHERE id=:projectId")
   fun getProjectById(projectId: Int): Project
+
+  @Update
+  fun update(project: Project)
 }

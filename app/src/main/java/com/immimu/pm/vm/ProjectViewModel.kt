@@ -48,4 +48,8 @@ class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
   fun deleteTask(task: Task) {
     taskDao.delete(task)
   }
+
+  fun updateProject(project: Project) {
+    projectDao.update(project)
+  }
 }
