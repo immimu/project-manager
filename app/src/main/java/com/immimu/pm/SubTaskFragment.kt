@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import com.immimu.pm.R.dimen
 import com.immimu.pm.adapter.ProjectItemDecoration
 import com.immimu.pm.adapter.SubTaskAdapter
+import com.immimu.pm.adapter.SubTaskAdapter.SubTaskItemListener
 import com.immimu.pm.context.EXTRA_PARENT_TASK_ID
 import com.immimu.pm.di.Injectable
+import com.immimu.pm.entity.SubTask
 import com.immimu.pm.entity.Task
 import com.immimu.pm.intent.IntentFactory
 import com.immimu.pm.vm.ProjectViewModel
@@ -28,7 +30,7 @@ import javax.inject.Inject
  * in two-pane mode (on tablets) or a [SubTaskActivity]
  * on handsets.
  */
-class SubTaskFragment : Fragment(), Injectable {
+class SubTaskFragment : Fragment(), Injectable, SubTaskItemListener {
 
   /**
    * The dummy content this fragment is presenting.
@@ -82,15 +84,27 @@ class SubTaskFragment : Fragment(), Injectable {
       if (it.containsKey(EXTRA_PARENT_TASK_ID)) {
         val taskId = it.getInt(EXTRA_PARENT_TASK_ID)
         activity?.let {
-          startActivity(intentFactory.createTaskComposerScreen(it, taskId, true))
+          startActivity(intentFactory.createTaskComposerScreen(it, taskId, true, true))
         }
       }
     }
   }
 
   private fun setupRecyclerView(recyclerView: RecyclerView) {
+    subTaskAdapter.subTaskItemListener = this
     recyclerView.adapter = subTaskAdapter
     recyclerView.addItemDecoration(
         ProjectItemDecoration(resources.getDimensionPixelSize(dimen.margin_10dp)))
+  }
+
+  override fun onSubTaskClicked(task: SubTask) {
+    // todo start task
+  }
+
+  override fun onSubTaskMoreMenuClicked(view: View, task: SubTask) {
+    activity?.let {
+      startActivity(
+          intentFactory.createTaskComposerScreen(it, task.parentTaskId, true, false, task.id))
+    }
   }
 }

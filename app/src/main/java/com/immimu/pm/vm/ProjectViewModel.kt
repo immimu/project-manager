@@ -45,11 +45,21 @@ class ProjectViewModel @Inject constructor(private val projectDao: ProjectDao,
 
   fun getTaskById(taskId: Int) = taskDao.getTaskById(taskId)
 
+  fun getSubTaskById(taskId: Int) = subTaskDao.getSubTaskById(taskId)
+
   fun deleteTask(task: Task) {
     taskDao.delete(task)
   }
 
   fun updateProject(project: Project) {
     projectDao.update(project)
+  }
+
+  fun updateTask(task: Task) {
+    taskDao.update(task)
+  }
+
+  fun updateSubTask(task: SubTask) {
+    subTaskDao.update(task)
   }
 }

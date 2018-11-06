@@ -11,6 +11,7 @@ import com.immimu.pm.context.EXTRA_IS_NEW
 import com.immimu.pm.context.EXTRA_IS_SUB_TASK
 import com.immimu.pm.context.EXTRA_PARENT_TASK_ID
 import com.immimu.pm.context.EXTRA_PROJECT_ID
+import com.immimu.pm.context.EXTRA_TASK_ID
 
 class IntentFactoryImpl : IntentFactory {
 
@@ -40,10 +41,12 @@ class IntentFactoryImpl : IntentFactory {
   }
 
   override fun createTaskComposerScreen(context: Context, projectId: Int,
-      isSubTask: Boolean): Intent {
+      isSubTask: Boolean, isNew: Boolean, id: Int?): Intent {
     val intent = Intent(context, TaskComposerActivity::class.java)
     intent.putExtra(EXTRA_PROJECT_ID, projectId)
     intent.putExtra(EXTRA_IS_SUB_TASK, isSubTask)
+    intent.putExtra(EXTRA_IS_NEW, isNew)
+    intent.putExtra(EXTRA_TASK_ID, id)
     return intent
   }
 }

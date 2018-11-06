@@ -4,8 +4,11 @@ import android.R.layout
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.widget.ArrayAdapter
+import com.immimu.pm.context.EXTRA_IS_NEW
 import com.immimu.pm.context.EXTRA_IS_SUB_TASK
 import com.immimu.pm.context.EXTRA_PROJECT_ID
+import com.immimu.pm.context.EXTRA_TASK_ID
+import com.immimu.pm.entity.AbstractTask
 import com.immimu.pm.entity.Priority
 import com.immimu.pm.entity.SubTask
 import com.immimu.pm.entity.Task
@@ -29,19 +32,36 @@ class TaskComposerActivity : BaseActivity(), HasSupportFragmentInjector {
     get() = intent.getIntExtra(EXTRA_PROJECT_ID, 0)
   private val isSubTask: Boolean
     get() = intent.getBooleanExtra(EXTRA_IS_SUB_TASK, false)
+  private val isNew: Boolean
+    get() = intent.getBooleanExtra(EXTRA_IS_NEW, false)
+  private val id: Int
+    get() = intent.getIntExtra(EXTRA_TASK_ID, 0)
+
+  private val priorityList = arrayOf("NONE", "LOW", "MEDIUM", "HIGH", "URGENT")
+  private val priorityListValue = arrayOf(Priority.NONE, Priority.LOW, Priority.MEDIUM,
+      Priority.HIGH,
+      Priority.URGENT)
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_task_composer)
     setSupportActionBar(toolbar)
     setUpActionBar()
-    val priorityList = arrayOf("NONE", "LOW", "MEDIUM", "HIGH", "URGENT")
-    val priorityListValue = arrayOf(Priority.NONE, Priority.LOW, Priority.MEDIUM, Priority.HIGH,
-        Priority.URGENT)
 
     val adapter = ArrayAdapter(this, layout.simple_spinner_item, priorityList)
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     prioritySpinner.adapter = adapter
+
+
+    if (isNew.not()) {
+      if (isSubTask) {
+        val subTask = projectViewModel.getSubTaskById(id)
+        bindForm(subTask)
+      } else {
+        val task = projectViewModel.getTaskById(id)
+        bindForm(task)
+      }
+    }
 
     var validated = false
     createProjectButton.setOnClickListener {
@@ -79,7 +99,12 @@ class TaskComposerActivity : BaseActivity(), HasSupportFragmentInjector {
           }
         }
         if (validated) {
-          projectViewModel.createSubTask(task)
+          if (isNew) {
+            projectViewModel.createSubTask(task)
+          } else {
+            task.id = id
+            projectViewModel.updateSubTask(task)
+          }
           finish()
         }
       } else {
@@ -116,11 +141,25 @@ class TaskComposerActivity : BaseActivity(), HasSupportFragmentInjector {
           }
         }
         if (validated) {
-          projectViewModel.createTask(task)
+          if (isNew) {
+            projectViewModel.createTask(task)
+          } else {
+            task.id = id
+            projectViewModel.updateTask(task)
+          }
           finish()
         }
       }
     }
+  }
+
+  private fun bindForm(subTask: AbstractTask) {
+    projectNameEditText.setText(subTask.name)
+    projectDescEditText.setText(subTask.description)
+    targetEditText.setText(subTask.target.toString())
+    val index = priorityListValue.indexOf(subTask.priority)
+    prioritySpinner.setSelection(index)
+    createProjectButton.text = getString(R.string.button_update)
   }
 
   private fun setUpActionBar() {

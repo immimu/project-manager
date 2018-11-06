@@ -106,7 +106,7 @@ class ProjectActivity : AppCompatActivity(), HasSupportFragmentInjector, Project
           true
         }
         R.id.action_add_task -> {
-          startActivity(intentFactory.createTaskComposerScreen(this, project.id, false))
+          startActivity(intentFactory.createTaskComposerScreen(this, project.id, false, true))
           true
         }
         else ->

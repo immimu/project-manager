@@ -31,7 +31,6 @@ import kotlinx.android.synthetic.main.empty_view.emptyContainer
 import kotlinx.android.synthetic.main.empty_view.emptyTextView
 import kotlinx.android.synthetic.main.task_list.taskDetailContainer
 import kotlinx.android.synthetic.main.task_list.taskList
-import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemListener {
@@ -84,7 +83,7 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
   }
 
   private fun createTask() {
-    startActivity(intentFactory.createTaskComposerScreen(this, projectId, false))
+    startActivity(intentFactory.createTaskComposerScreen(this, projectId, false, true))
   }
 
   private fun setUpActionBar() {
@@ -153,12 +152,15 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
           true
         }
         R.id.action_edit -> {
-          toast("TODO : add edit function")
+          task.task?.let {
+            startActivity(
+                intentFactory.createTaskComposerScreen(this, it.projectId, false, false, it.id))
+          }
           true
         }
         R.id.action_add_sub_task -> {
           task.task?.let {
-            startActivity(intentFactory.createTaskComposerScreen(this, it.id, true))
+            startActivity(intentFactory.createTaskComposerScreen(this, it.id, true, true))
           }
           true
         }

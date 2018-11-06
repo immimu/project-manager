@@ -12,5 +12,6 @@ interface IntentFactory {
 
   fun createSubTaskScreen(context: Context, parentTaskId: Int): Intent
 
-  fun createTaskComposerScreen(context: Context, projectId: Int, isSubTask: Boolean): Intent
+  fun createTaskComposerScreen(context: Context, projectId: Int, isSubTask: Boolean,
+      isNew: Boolean, id: Int? = null): Intent
 }
