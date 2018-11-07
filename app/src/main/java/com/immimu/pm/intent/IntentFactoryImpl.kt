@@ -6,6 +6,7 @@ import com.immimu.pm.ProjectActivity
 import com.immimu.pm.ProjectComposerActivity
 import com.immimu.pm.SubTaskActivity
 import com.immimu.pm.TaskComposerActivity
+import com.immimu.pm.TaskExecutorActivity
 import com.immimu.pm.TaskListActivity
 import com.immimu.pm.context.EXTRA_IS_NEW
 import com.immimu.pm.context.EXTRA_IS_SUB_TASK
@@ -14,6 +15,13 @@ import com.immimu.pm.context.EXTRA_PROJECT_ID
 import com.immimu.pm.context.EXTRA_TASK_ID
 
 class IntentFactoryImpl : IntentFactory {
+
+  override fun createTaskExecutorScreen(context: Context, isSubTask: Boolean, taskId: Int): Intent {
+    val intent = Intent(context, TaskExecutorActivity::class.java)
+    intent.putExtra(EXTRA_IS_SUB_TASK, isSubTask)
+    intent.putExtra(EXTRA_TASK_ID, taskId)
+    return intent
+  }
 
   override fun createProjectScreen(context: Context): Intent = Intent(context,
       ProjectActivity::class.java)

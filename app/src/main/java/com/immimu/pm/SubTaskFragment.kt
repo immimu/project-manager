@@ -98,7 +98,9 @@ class SubTaskFragment : Fragment(), Injectable, SubTaskItemListener {
   }
 
   override fun onSubTaskClicked(task: SubTask) {
-    // todo start task
+    activity?.let {
+      startActivity(intentFactory.createTaskExecutorScreen(it, true, task.id))
+    }
   }
 
   override fun onSubTaskMoreMenuClicked(view: View, task: SubTask) {

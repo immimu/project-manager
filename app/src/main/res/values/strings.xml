@@ -37,4 +37,15 @@
   <string name="hint_target">Target (in hour)</string>
   <string name="hint_task_name">Task name</string>
   <string name="button_update">Update</string>
+  <string name="title_task_executor">Task Executor</string>
+
+  <plurals name="target_time">
+    <item quantity="one">Your target is %d hour</item>
+    <item quantity="other">Your target is %d hours</item>
+  </plurals>
+
+  <plurals name="left_time">
+    <item quantity="one">%d minute left</item>
+    <item quantity="other">%d minutes left</item>
+  </plurals>
 </resources>

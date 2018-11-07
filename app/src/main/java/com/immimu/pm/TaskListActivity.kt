@@ -133,7 +133,11 @@ class TaskListActivity : BaseActivity(), HasSupportFragmentInjector, TaskItemLis
       }
     } else {
       task.task?.let {
-        startActivity(intentFactory.createSubTaskScreen(this, it.id))
+        if (task.subTasks.isEmpty()) {
+          startActivity(intentFactory.createTaskExecutorScreen(this, false, it.id))
+        } else {
+          startActivity(intentFactory.createSubTaskScreen(this, it.id))
+        }
       }
     }
   }

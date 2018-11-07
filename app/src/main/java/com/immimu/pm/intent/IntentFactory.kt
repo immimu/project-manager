@@ -14,4 +14,6 @@ interface IntentFactory {
 
   fun createTaskComposerScreen(context: Context, projectId: Int, isSubTask: Boolean,
       isNew: Boolean, id: Int? = null): Intent
+
+  fun createTaskExecutorScreen(context: Context, isSubTask: Boolean, taskId: Int): Intent
 }
