@@ -13,6 +13,7 @@ import com.immimu.pm.entity.Priority.LOW
 import com.immimu.pm.entity.Priority.MEDIUM
 import com.immimu.pm.entity.Priority.URGENT
 import com.immimu.pm.entity.Status
+import com.immimu.pm.entity.Status.DONE
 import com.immimu.pm.entity.TaskWrapper
 import kotlinx.android.synthetic.main.task_list_content.view.createdAtTextView
 import kotlinx.android.synthetic.main.task_list_content.view.moreMenu
@@ -70,6 +71,12 @@ class TaskAdapter :
     } else {
       holder.viewButton.text = holder.itemView.context.getString(R.string.button_start_task)
       holder.target.visibility = View.VISIBLE
+    }
+
+    if (item.task?.status == DONE) {
+      holder.viewButton.visibility = View.INVISIBLE
+    } else {
+      holder.viewButton.visibility = View.VISIBLE
     }
 
     holder.viewButton.setOnClickListener {

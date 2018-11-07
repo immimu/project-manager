@@ -39,13 +39,15 @@
   <string name="button_update">Update</string>
   <string name="title_task_executor">Task Executor</string>
 
+  <string name="time_format">%1$s</string>
+
   <plurals name="target_time">
     <item quantity="one">Your target is %d hour</item>
     <item quantity="other">Your target is %d hours</item>
   </plurals>
 
-  <plurals name="left_time">
-    <item quantity="one">%d minute left</item>
-    <item quantity="other">%d minutes left</item>
-  </plurals>
+  <string name="left_time">%1$s left</string>
+  <string name="button_stop">Stop task</string>
+  <string name="title_confirmation">Confirmation</string>
+  <string name="text_task_confirmation">Have you complete this task?</string>
 </resources>

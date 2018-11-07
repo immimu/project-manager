@@ -13,6 +13,7 @@ import com.immimu.pm.entity.Priority.LOW
 import com.immimu.pm.entity.Priority.MEDIUM
 import com.immimu.pm.entity.Priority.URGENT
 import com.immimu.pm.entity.Status
+import com.immimu.pm.entity.Status.DONE
 import com.immimu.pm.entity.SubTask
 import kotlinx.android.synthetic.main.task_list_content.view.createdAtTextView
 import kotlinx.android.synthetic.main.task_list_content.view.moreMenu
@@ -64,6 +65,11 @@ class SubTaskAdapter :
     holder.priority.text = priority
     holder.target.text = item.target.toString().plus(" Hours")
 
+    if (item.status == DONE) {
+      holder.viewButton.visibility = View.INVISIBLE
+    } else {
+      holder.viewButton.visibility = View.VISIBLE
+    }
     holder.viewButton.text = holder.itemView.context.getString(R.string.button_start_task)
 
     holder.viewButton.setOnClickListener {
