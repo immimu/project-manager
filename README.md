@@ -1,2 +1,3 @@
 # project-manager
-small app for people who have project and wants to manage and organise their tasks 
+a sample app which implement Room with their relationship, ViewModel, Dagger
+![Screenshot](image/Screenshot_1541986830.png)
